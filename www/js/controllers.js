@@ -1367,6 +1367,156 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
     });
 })
 
+.controller('uploadDocsMainController', function($scope, $state) {
+    $scope.goTo = function(whichPage){
+        if(whichPage === 'uploadDocsTeacher'){
+            $state.go('menu.uploadDocsTeacher');
+        }else{
+            $state.go('menu.selectDocsTeacher');
+        }
+    };
+})
+
+.controller('uploadDocsTeacherController', function($scope, $rootScope, $cordovaFileTransfer, $ionicPopup, $ionicLoading, TeacherExamMarksService, DocumentTeacherService, $ionicPopup, $stateParams, $state) {
+    var studentId = $rootScope.studentId;
+    $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });
+
+    TeacherExamMarksService.fetchClass().then(function(classes){
+        $scope.classes = classes;
+        $ionicLoading.hide();
+    }, function(error) {
+        console.error('err', error);
+        $ionicLoading.hide();
+    });
+
+    DocumentTeacherService.fetchDocumentType().then(function(documentTypes){
+        $scope.documentTypes = documentTypes;
+        $ionicLoading.hide();
+    }, function(error) {
+        console.error('err', error);
+        $ionicLoading.hide();
+    });
+
+    $scope.getSections = function(classCode){
+        TeacherExamMarksService.fetchSection(classCode).then(function(sections){
+            $scope.sections = sections;
+            $ionicLoading.hide();
+        }, function(error) {
+            console.error('err', error);
+            $ionicLoading.hide();
+        });
+    };
+
+   $scope.fetchSubjects = function(classCode, sectionCode, examCode){
+        TeacherExamMarksService.fetchSubjects(classCode, sectionCode, examCode).then(function(subjects){
+            $scope.subjects = subjects;
+            $ionicLoading.hide();
+        }, function(error) {
+            console.error('err', error);
+            $ionicLoading.hide();
+        });
+    };
+
+    $scope.uploadDoc = function(classCode, sectionCode, documentType, file, remark){
+        var fileExtension = file.name.substring(file.name.lastIndexOf('.')+1, file.name.length),
+            fileName = file.name.substring(0, file.name.lastIndexOf('.')),
+            params = { 
+                "classCode":classCode,
+                "sectionCode":sectionCode,
+                "fileName":file,
+                "createdBy":studentId,
+                "documentType":documentType,
+                "fileType":fileExtension,
+                "remark":remark
+            };
+
+            console.log(file)
+
+        if(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension ==='pdf'){
+            // document.addEventListener("deviceready", onDeviceReady, false);
+            // alert(FileTransfer)
+            // function onDeviceReady() {
+            //    // as soon as this function is called FileTransfer "should" be defined
+            //    alert(FileTransfer);
+            // }
+            // var options = {
+            //     fileKey: "avatar",
+            //     fileName: "image.png",
+            //     chunkedMode: false,
+            //     mimeType: "image/png"
+            // };
+            // $cordovaFileTransfer.upload("ftp://lpisschoolkn.org/uploadfile/", file.name, options).then(function(result) {
+            //     alert("SUCCESS: " + JSON.stringify(result.response));
+            // }, function(err) {
+            //     console.log("ERROR: " + JSON.stringify(err));
+            // }, function (progress) {
+            //     // constant progress updates
+            // });
+            // // DocumentTeacherService.saveDocument(params).then(function(response){
+            // //     $ionicPopup.alert({
+            // //         title: 'Success',
+            // //         template: '<p>File uploaded successfully.</p>'
+            // //     });
+
+            // //     $ionicLoading.hide();
+            // // }, function(error) {
+            // //     console.error('err', error);
+            // //     $ionicLoading.hide();
+            // // });
+        }else{
+            $ionicPopup.alert({
+                title: 'Error',
+                template: '<p>Please choose jpg or pdf files only.</p>'
+            });
+        }
+
+        
+        
+    };
+
+})
+
+.controller('selectDocsTeacherController', function($scope, $rootScope, $ionicPopup, $ionicLoading, TeacherExamMarksService, DocumentTeacherService, $ionicPopup, $stateParams, $state) {
+    var studentId = $rootScope.studentId;
+    $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });
+
+    TeacherExamMarksService.fetchClass().then(function(classes){
+        $scope.classes = classes;
+        $ionicLoading.hide();
+    }, function(error) {
+        console.error('err', error);
+        $ionicLoading.hide();
+    });
+
+    $scope.getSections = function(classCode){
+        TeacherExamMarksService.fetchSection(classCode).then(function(sections){
+            $scope.sections = sections;
+            $ionicLoading.hide();
+        }, function(error) {
+            console.error('err', error);
+            $ionicLoading.hide();
+        });
+    };
+
+    $scope.viewDoc = function(sectionCode){
+        $rootScope.sectionCodeDoc = sectionCode;
+        $state.go('menu.docsAndSyllabus');
+    };
+  
+})
+
 .controller('EntryDisciplineController', function($scope, $rootScope, $ionicLoading, DisciplineTeacherService, $ionicPopup, $stateParams, $state) {
     var studentId = $stateParams.studentId;
     $ionicLoading.show({
@@ -1534,4 +1684,204 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         });
     };
 
+})
+
+.controller('ptiController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $state, PTIServices) {
+    var studentId = $rootScope.studentId;
+
+    $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });
+
+    PTIServices.getPtiDetails(studentId).then(function(interactions){
+        var dataToSet = {},
+            createInteractionByTeacher = {};
+        for(var i in interactions.messageHistory){
+            var teacherNode = interactions.messageHistory[i].teacher.split(' ').join('');
+            if(!createInteractionByTeacher[teacherNode]){
+                createInteractionByTeacher[teacherNode] = {
+                    teacherName : interactions.messageHistory[i].teacher,
+                    interactions : []
+                }
+            }
+
+            createInteractionByTeacher[teacherNode].interactions.push(interactions.messageHistory[i]);
+        }
+
+        dataToSet.interactions = createInteractionByTeacher;
+        dataToSet.teacherList = interactions.subjectTeacher;
+        $scope.ptis = dataToSet.interactions;
+
+        PTIServices.setPTIData(dataToSet);
+        $ionicLoading.hide();
+    }, function(error) {
+        console.error('err', error);
+        $ionicLoading.hide();
+    });
+
+    $scope.detailPTI = function(teacherID){
+       $state.go('menu.ptiDetails', {teacherID: teacherID})
+    };
+})
+
+.controller('ptiDetailsController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $stateParams, PTIServices) {
+    var teacherToShow = PTIServices.getPTIData().interactions[$stateParams.teacherID];
+    $scope.interactionDetail = teacherToShow.interactions;
+})
+
+.controller('ptiNewController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $stateParams, $state, PTIServices) {
+    var studentId = $rootScope.studentId;
+
+    $scope.payload = {
+        un : studentId,
+        subj : '',
+        comments : ''
+    };
+
+    $scope.countries_text_multiple = 'Choose countries';
+    $scope.teacherList = angular.copy(PTIServices.getPTIData().teacherList);
+    var teacherListToPrint = [];
+    for(var i = 0 ; i<$scope.teacherList.length; i++){
+        teacherListToPrint.push({
+            id : $scope.teacherList[i].teacherCode,
+            text: $scope.teacherList[i].teacherName
+        })
+    }
+    $scope.teacherListToPrint = teacherListToPrint;
+
+    $scope.val =  {multiple: null};
+
+    $scope.calcDisabled = function(){
+        var status = false;
+        for(var i in $scope.payload){
+            if(!$scope.payload[i]){
+                status = true;
+                break;
+            }
+        }
+        return status;
+    };
+
+    $scope.sendMessage = function(){
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+        $scope.payload.tecId = $scope.val.multiple.split(';').join(',');
+        
+        PTIServices.saveNewPti($scope.payload).then(function(response){
+
+            var alertPopup = $ionicPopup.alert({
+                title: 'Success',
+                template: '<p>Your have raised a new query</p>'
+            });
+            alertPopup.then(function(res) {
+                $state.go('menu.pti');
+            });
+            
+            $ionicLoading.hide();
+        }, function(error) {
+            console.error('err', error);
+            $ionicLoading.hide();
+        });
+    };
+
+})
+
+.controller('ptiTeacherController', function($scope, $state) {
+    $scope.goTo = function(whichPage){
+        if(whichPage === 'newQueries'){
+            $state.go('menu.ptiTeacherNewQueryList');
+        }else{
+            $state.go('menu.ptiTeacherRepliedQuery');
+        }
+    };
+})
+
+.controller('ptiTeacherNewQueryList', function($scope, $rootScope, $ionicLoading, $state, PTITeacherServices) {
+   var studentId = $rootScope.studentId;
+
+    $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });
+
+    PTITeacherServices.ptiTeacherRepliedQuery(studentId).then(function(newQueries){
+        $scope.newQueries = newQueries;
+        $ionicLoading.hide();
+    }, function(error) {
+        console.error('err', error);
+        $ionicLoading.hide();
+    });
+
+    $scope.replyQuery = function(query){
+        PTITeacherServices.setCurQuery(query);
+        $state.go('menu.ptiTeacherRespondQueryList');
+    };
+})
+
+.controller('ptiTeacherRespondQueryList', function($scope, $rootScope, $ionicPopup, $ionicLoading, $state, $stateParams, PTITeacherServices) {
+    var studentId = $rootScope.studentId;
+
+    $scope.curQuery = PTITeacherServices.getCurQuery();
+
+    $scope.saveReply = function(reply){
+        var params = {
+            chatId : $scope.curQuery.CHATID,
+            tecId : studentId,
+            reply : reply
+        };
+
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+        PTITeacherServices.savePtiReply(params).then(function(newQueries){
+            var alertPopup = $ionicPopup.alert({
+                title: 'Success',
+                template: '<p>Your reply has been saved</p>'
+            });
+
+            $ionicLoading.hide();
+        }, function(error) {
+            console.error('err', error);
+            $ionicLoading.hide();
+        });
+    };
+})
+
+.controller('ptiTeacherRepliedQuery', function($scope, $rootScope, $ionicPopup, $ionicLoading, $state, $stateParams, PTITeacherServices) {
+    var studentId = $rootScope.studentId;
+
+     $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });
+
+    PTITeacherServices.ptiTeacherRepliedQuery(studentId).then(function(repliedQueries){
+        $scope.repliedQueries = repliedQueries;
+
+        $ionicLoading.hide();
+    }, function(error) {
+        console.error('err', error);
+        $ionicLoading.hide();
+    });
 });
