@@ -1534,8 +1534,4 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         });
     };
 
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 6068ea420c0d31961b2a0e304dd1d53a58e5d38b
