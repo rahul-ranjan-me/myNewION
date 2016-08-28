@@ -922,6 +922,12 @@
 .bar-footer{
   padding-top: 0;
   padding-bottom: 0
+  border-top:none;
+}
+
+.bar-footer a{
+  position: relative;
+  top: 2px
 }
 
 .copyRight{float:left;width:58%;position: fixed;left: 0}
