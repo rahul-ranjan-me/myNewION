@@ -1,0 +1,31 @@
+<ion-view view-title="">
+	<ion-content class="attendence">
+		<h5>Mark Attendence</h5>
+		<table class="mark-attendence">
+			<thead>
+				<tr>
+					<th>Roll no.</th>
+					<th>Name</th>
+					<th>P</th>
+					<th>A</th>
+					<th>L</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="student in studentList">
+					<td>{{student.ROLLNO}}</td>
+					<td>{{student.STUDENTNAME}}</td>
+					<td><span ng-click="markAttendance(student, 'P')" ng-class="{'selected' : student.ATTENDANCE == 'P'}" class="selection present">P</span></td>
+					<td><span ng-click="markAttendance(student, 'A')" ng-class="{'selected' : student.ATTENDANCE == 'A'}" class="selection absent">A</span></td>
+					<td><span ng-click="markAttendance(student, 'L')" ng-class="{'selected' : student.ATTENDANCE == 'L'}" class="selection leave">L</span></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="form-control button-action">
+			<input type="button" ng-click="saveAttendance()" value="Save" />
+		</div>
+
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

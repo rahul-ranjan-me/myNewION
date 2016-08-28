@@ -1,0 +1,58 @@
+[
+   {
+      "classCode": "CLM13",
+      "className": "Pre School"
+   },
+   {
+      "classCode": "CLM14",
+      "className": "Pre Primary"
+   },
+   {
+      "classCode": "CLM1",
+      "className": "I"
+   },
+   {
+      "classCode": "CLM2",
+      "className": "II"
+   },
+   {
+      "classCode": "CLM3",
+      "className": "III"
+   },
+   {
+      "classCode": "CLM4",
+      "className": "IV"
+   },
+   {
+      "classCode": "CLM5",
+      "className": "V"
+   },
+   {
+      "classCode": "CLM6",
+      "className": "VI"
+   },
+   {
+      "classCode": "CLM7",
+      "className": "VII"
+   },
+   {
+      "classCode": "CLM8",
+      "className": "VIII"
+   },
+   {
+      "classCode": "CLM9",
+      "className": "IX"
+   },
+   {
+      "classCode": "CLM10",
+      "className": "X"
+   },
+   {
+      "classCode": "CLM11",
+      "className": "XI"
+   },
+   {
+      "classCode": "CLM12",
+      "className": "XII"
+   }
+]

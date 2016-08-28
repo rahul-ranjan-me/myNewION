@@ -1,0 +1,17 @@
+<ion-view view-title="View Discipline">
+	<ion-content class="viewDiscipline">
+		
+		<h5 ng-if="defaults != undefined && defaults.length < 1">No discipline issue found for {{studentName}}</h5>
+		<div ng-if="defaults.length > 0">
+			<h5>Defaults list for {{studentName}}</h5>
+			<div class="details-cont" ng-repeat="default in defaults">
+				<div class="wrap">
+					<p>Defaulter in <strong>{{default.discipline}}</strong></p>
+					<p><strong>Raised by: </strong>{{default.reportBy}}</p>
+				</div>
+			</div>
+		</div>
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

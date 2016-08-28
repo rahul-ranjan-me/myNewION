@@ -1,0 +1,30 @@
+<ion-view view-title="Attendance" class="attendance">
+	<ion-content class="teacher-attendance">
+		
+		<h5>Please select class and section to mark attendance.</h5>
+		
+		<div class="form-control">
+			<label>Class</label>
+			<select name="class" id="class"
+			      ng-options="option.className for option in classes track by option.classCode"
+			      ng-model="class" ng-change="getSections(class.classCode)">
+				      <option>Please select</option>
+			      </select>
+		</div>
+
+		<div class="form-control">
+			<label>Section</label>
+			<select name="class" id="class"
+			      ng-options="option.sectionName for option in sections track by option.sectionCode"
+			      ng-model="section" ng-change="setSection(section.sectionCode)">
+				      <option>Please select</option>
+			      </select>
+		</div>
+
+		<div class="form-control button-action">
+			<input type="button" ng-disabled="(!class.classCode || !section.sectionCode)" ng-click="getStudentList(class.classCode, section.sectionCode)" value="Search" />
+		</div>
+
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

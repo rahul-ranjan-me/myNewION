@@ -1,0 +1,52 @@
+<ion-view view-title="Thought of the day">
+	<ion-content class="slideContainer">
+		<div class="label-button bar bar-header bar-energized">	
+			<button class="button pull-left"
+			      ng-click="previous()" ng-disabled="slideIndex == 0">
+				<i class="icon ion-ios-arrow-back"></i>
+				<i class="icon ion-ios-arrow-back"></i>
+			</button>
+			<span class="grid-label">{{curDayLabel}}</span>
+			<button class="button pull-right"
+			      ng-click="next()" ng-disabled="slideIndex == 11">
+				<i class="icon ion-ios-arrow-forward"></i>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</button>
+		</div>     
+		<ion-slide-box on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')" show-pager="false" active-slide="slideIndex">
+
+			<ion-slide ng-repeat="(i, month) in thoughtsFullYear">
+
+				<div class="slideContainer">
+					<table>
+						<thead>
+							<tr>
+								<th class="columns"><span>Sun</span></th>
+								<th class="columns"><span>Mon</span></th>
+								<th class="columns"><span>Tue</span></th>
+								<th class="columns"><span>Wed</span></th>
+								<th class="columns"><span>Thu</span></th>
+								<th class="columns"><span>Fri</span></th>
+								<th class="columns"><span>Sat</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="rowsDay in month">
+								<td class="columns" ng-repeat="day in rowsDay" ng-style="{background: day.bgColor, fontColor: day.fontColor}" ng-click="showEvent(day)">
+								  	<span ng-if="day.type">&nbsp;</span>
+								  	<span ng-if="!day.type" ng-class="{'withMessage' : day.fontColor}" ng-style="{color:day.fontColor, fontWeight:day.fontWeight}">{{day.date}}</span>			          	
+							    </td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="curDayThought" ng-if="curDayThought"><span>&#8220;</span> {{curDayThought}} <em>&#8221;</em></div>
+
+				</div>
+
+			</ion-slide>
+			
+		</ion-slide-box>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

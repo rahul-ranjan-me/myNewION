@@ -1,0 +1,12 @@
+<ion-view view-title="Exam marks">
+	<ion-content class="examMarks">
+		<div class="details-cont">
+			<div class="wrap" ng-repeat="exam in exams.examDetails" ng-click="goToMarks(exam)">
+				<span class="pull-right"><i class="icon ion-ios-search"></i></span>
+				{{exam.examName}}
+			</div>
+		</div>
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

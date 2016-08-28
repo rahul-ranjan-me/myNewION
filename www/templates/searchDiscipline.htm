@@ -1,0 +1,41 @@
+<ion-view view-title="Raise Discipline">
+	<ion-content>
+		
+		<div class="common-form">
+			<h4>Search Student</h4>
+			<div class="form-control">
+				<label>Student Name</label>
+				<input type="text" ng-model="studentName" />
+			</div>
+
+			<div class="form-control button-action">
+				<input type="button" ng-disabled="(!studentName)" ng-click="searchStudent(studentName)" value="Search" />
+			</div>
+		</div>
+
+		<h4 ng-if="studentList != undefined && studentList.length < 1">No student found</h4>
+
+		<div class="studentList search" ng-if="studentList.length > 0">
+			<table class="mark-attendence">
+				<thead>
+					<tr>
+						<th>Class</th>
+						<th>Name</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="student in studentList">
+						<td>{{student.class}}</td>
+						<td>{{student.studentName}}</td>
+						<td class="action-view-entry">
+							<span ng-click="goto('menu.viewDiscipline', student)">View</span> <span ng-click="goto('menu.entryDiscipline', student)">Entry</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

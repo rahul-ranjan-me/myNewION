@@ -1,0 +1,296 @@
+[
+   {
+      "day": "Mon",
+      "timetable": [
+         {
+            "lecture": "0",
+            "subject": "FIT",
+            "teacher": "Mr.Dinesh Prasad Singh  ",
+            "lecturetype": "DUMMY"
+         },
+         {
+            "lecture": "1",
+            "subject": "SOCIAL SCIENCE",
+            "teacher": "Ms.Rachna Tyagi   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "3",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "M.L"
+         },
+         {
+            "lecture": "4",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "M.L"
+         },
+         {
+            "lecture": "5",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "L.L"
+         },
+         {
+            "lecture": "6",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "L.L"
+         },
+         {
+            "lecture": "7",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "8",
+            "subject": "HINDI",
+            "teacher": "Ms.Madhu Singhal  ",
+            "lecturetype": "Theory"
+         }
+      ]
+   },
+   {
+      "day": "Tue",
+      "timetable": [
+         {
+            "lecture": "3",
+            "subject": "SOCIAL SCIENCE",
+            "teacher": "Ms.Rachna Tyagi   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "4",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "5",
+            "subject": "HINDI",
+            "teacher": "Ms.Madhu Singhal  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "6",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "7",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "TLA"
+         },
+         {
+            "lecture": "8",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "TLA"
+         }
+      ]
+   },
+   {
+      "day": "Wed",
+      "timetable": [
+         {
+            "lecture": "1",
+            "subject": "HINDI",
+            "teacher": "Ms.Madhu Singhal  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "2",
+            "subject": "GK, LIBRARY",
+            "teacher": "Ms.Rachna Tyagi   , Ms.Renu Kaith  ",
+            "lecturetype": "Theory, Theory"
+         },
+         {
+            "lecture": "3",
+            "subject": "SOCIAL SCIENCE",
+            "teacher": "Ms.Rachna Tyagi   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "4",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "5",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "6",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "7",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "Theory"
+         }
+      ]
+   },
+   {
+      "day": "Thu",
+      "timetable": [
+         {
+            "lecture": "1",
+            "subject": "SOCIAL SCIENCE",
+            "teacher": "Ms.Rachna Tyagi   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "3",
+            "subject": "FIT",
+            "teacher": "Ms.Anuradha Thukral  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "4",
+            "subject": "HINDI",
+            "teacher": "Ms.Madhu Singhal  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "5",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "6",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "7",
+            "subject": "SANSKRIT",
+            "teacher": "Ms.Sudha Rana   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "8",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "Theory"
+         }
+      ]
+   },
+   {
+      "day": "Fri",
+      "timetable": [
+         {
+            "lecture": "1",
+            "subject": "SOCIAL SCIENCE",
+            "teacher": "Ms.Rachna Tyagi   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "2",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "3",
+            "subject": "VALUE EDUCATION",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "4",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "5",
+            "subject": "HINDI",
+            "teacher": "Ms.Madhu Singhal  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "6",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "7",
+            "subject": "SANSKRIT",
+            "teacher": "Ms.Sudha Rana   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "8",
+            "subject": "FIT",
+            "teacher": "Ms.Anuradha Thukral  ",
+            "lecturetype": "Practical"
+         }
+      ]
+   },
+   {
+      "day": "Sat",
+      "timetable": [
+         {
+            "lecture": "1",
+            "subject": "SOCIAL SCIENCE",
+            "teacher": "Ms.Rachna Tyagi   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "2",
+            "subject": "SANSKRIT",
+            "teacher": "Ms.Sudha Rana   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "3",
+            "subject": "FIT",
+            "teacher": "Ms.Anuradha Thukral  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "4",
+            "subject": "MATHS",
+            "teacher": "Ms.Bhavna Batra  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "5",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "6",
+            "subject": "ENGLISH",
+            "teacher": "Ms.Shikha Chhabra   ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "7",
+            "subject": "SCIENCE",
+            "teacher": "Ms.Anju Moorjani  ",
+            "lecturetype": "Theory"
+         },
+         {
+            "lecture": "8",
+            "subject": "HINDI",
+            "teacher": "Ms.Madhu Singhal  ",
+            "lecturetype": "Theory"
+         }
+      ]
+   }
+]

@@ -1,0 +1,30 @@
+<ion-view view-title="Online feedback">
+	<ion-content class="onlineFeedback">
+		<div class="feedback-wrapper">
+			<div class="form-control">
+				<label for="yourName">Your name</label>
+				<input type="text" id="yourName" ng-model="payload.userName" placeholder="Enter your name" />
+			</div>
+			<div class="form-control">
+				<label for="contactNumber">Contact no.</label>
+				<input type="text" id="contactNumber" ng-model="payload.contactNo" placeholder="Enter your contact no." />
+			</div>
+			<div class="form-control">
+				<label for="email">Your email</label>
+				<input type="text" id="email" ng-model="payload.email" placeholder="Enter your email" />
+			</div>
+			<div class="form-control">
+				<label for="subject">Subject</label>
+				<input type="text" id="subject" ng-model="payload.subj" placeholder="Enter subject" />
+			</div>
+			<div class="form-control">
+				<label for="comments">Your feedback</label>
+				<textarea id="comments" ng-model="payload.comments" placeholder="Enter your feedback"></textarea>
+			</div>
+			<div class="row">
+				<input type="submit" class="btn-submit" ng-click="saveFeedback()" value="Send" ng-disabled="calcDisabled()" />
+			</div>
+		</div>		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

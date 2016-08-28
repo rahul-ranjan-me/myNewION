@@ -1,0 +1,31 @@
+<ion-view view-title="Upload document" class="Upload Doc">
+	<ion-content class="teacher-exam-marks">
+		
+		<div class="common-form">
+			<div class="form-control">
+				<label for="class">Class</label>
+				<select name="class" id="class"
+			      ng-options="option.className for option in classes track by option.classCode"
+			      ng-model="class" ng-change="getSections(class.classCode)">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="section">Section</label>
+				<select name="class" id="class"
+			      ng-options="option.sectionName for option in sections track by option.sectionCode"
+			      ng-model="section">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			
+
+			<div class="form-control button-action">
+				<input type="button" ng-click="viewDoc(section.sectionCode)" value="View Doc" />
+
+				<!-- ng-disabled="(!class.classCode || !section.sectionCode || !examName.examNameCode || !subject.subjectCode)" -->
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

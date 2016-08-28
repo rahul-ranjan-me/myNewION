@@ -1,0 +1,29 @@
+<ion-view view-title="Online feedback">
+	<ion-content class="onlineFeedback top-wrapper">
+		<div class="feedback-wrapper">
+			<div class="form-control">
+				<fancy-select
+	                  header-text="Multiple"
+	                  allow-empty='false'
+	                  value="val.multiple"
+	                  text="countries_text_multiple"
+	                  items="teacherListToPrint"
+	                  multi-select="true">
+                </fancy-select>
+			</div>
+			<div class="form-control">
+				<label for="title">Title</label>
+				<input type="text" id="title" ng-model="payload.subj" placeholder="Enter title" />
+			</div>
+			<div class="form-control">
+				<label for="message">Message</label>
+				<input type="text" id="message" ng-model="payload.comments" placeholder="Enter your message" />
+			</div>
+			
+			<div class="row">
+				<input type="submit" class="btn-submit" ng-click="sendMessage()" value="Send" ng-disabled="calcDisabled()" />
+			</div>
+		</div>		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

@@ -1,0 +1,30 @@
+
+<ion-view view-title="View Exam result">
+	<ion-content class="exam-subject">
+		
+		<h4>{{results[0].SUBJECTNAME}} - ({{results[0].EXAMNAME}}) ({{results[0].EXAMNAMECODE}}) ({{results[0].ACTIVITYNAME}})</h4>
+		
+		<div class="exam-result">
+			<table>
+				<thead>
+					<tr>
+						<th>Roll no.</th>
+						<th>Student name</th>
+						<th>M.M</th>
+						<th>M.O</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="result in results">
+						<td>{{result.ROLLNO}}</td>
+						<td>{{result.STUDENT}}</td>
+						<td>{{result.MAXMARKS}}</td>
+						<td>{{result.TESTMARKS}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

@@ -1,0 +1,30 @@
+<ion-view view-title="Docs and Syllabus">
+	<ion-content class="docSYllabus">
+		<div class="doc-heads">
+			<div class="row" ng-repeat="heads in docsAndSyllabusHead">
+				<div class="col">
+					<span class="document" ng-if="userType=='Teacher'">{{heads.documentType}}</span>
+					<span class="document" ng-if="userType!='Teacher'">{{heads.document_type}}</span>
+					<div class="detail-doc pull-right"  ng-if="userType=='Teacher'" ng-click="getDetails(heads.documentType)"><i class="icon ion-ios-list"></i></div>
+					<div class="detail-doc pull-right"  ng-if="userType!='Teacher'" ng-click="getDetails(heads.document_type)"><i class="icon ion-ios-list"></i></div>
+					<span class="pull-right counter">( {{heads.counter}} )</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="docs-details" ng-if="docsAndSyllabusDetails">
+			<h5>Details for {{documentType}}</h5>
+			<div ng-repeat="details in docsAndSyllabusDetails">
+				<div class="details-cont">
+					<div class="wrap">
+						<a class="pull-right" href="{{details.filename}}" target="_blank"><i class="icon ion-ios-download"></i></a>
+						<p><strong>Created by:</strong> {{details.createdBy}}</p>
+						<p><strong>Remarks:</strong> {{details.remarks}}</p>
+						<p><strong>Dated:</strong> {{details.uploadDate}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

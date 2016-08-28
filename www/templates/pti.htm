@@ -1,0 +1,12 @@
+<ion-view view-title="PTI" class="ptiDetails">
+	<ion-content class="pti-margin">
+		<div class="details-cont" ng-repeat="(i, pti) in ptis" ng-click="detailPTI(i)">
+			<div class="wrap">
+				<p>{{pti.teacherName}}</p>
+			</div>
+		</div>
+			
+		<a class="createNew" href="#/menu/ptiNew"> <span class="ion-compose"></span> <strong>Create query</strong></a>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

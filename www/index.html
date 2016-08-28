@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="lib/components-font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="lib/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/angular-ui-bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
+    <script src="lib/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="lib/angular-ui-calendar/calendar.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ionic/js/ionic.headerShrink.js"></script>
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/constants.js"></script>
+    <script src="js/configs.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyAxpGqlmblpxFgvPDwuBtFp1dG9J_Zfvzk&sensor=true"></script>
+  </head>
+  <body ng-app="aes">
+    <ion-nav-view></ion-nav-view>
+    <script id="fancy-select.html" type="text/ng-template">
+    <ion-list>
+      <ion-item class="item-text-wrap" ng-click="showItems($event)">
+        {{text}}
+        <span class="item-note">
+          {{noteText}}
+        </span>
+      </ion-item>
+    </ion-list>
+  </script>
+    <script id="fancy-select-items.html" type="text/ng-template">
+        <ion-view class="fancy-select-items modal">
+          <ion-header-bar class="bar-positive">
+
+            <button ng-click="hideItems()" class="button button-positive button-icon icon ion-ios-arrow-back"></button>
+
+            <h1 class="title">{{headerText}}</h1>
+
+            <button ng-click="validate()" class="button button-positive button-icon ion-checkmark"></button>
+
+          </ion-header-bar>
+          <ion-content>
+            <div class="list">
+              <!-- Multi select -->
+              <ion-toggle
+                          ng-repeat="item in items"
+                          ng-if="multiSelect"
+                          ng-checked="item.checked"
+                          ng-model="item.checked"
+                          class="item item-text-wrap">
+                <div class="fancy-select-icon" ng-if="item.icon != null">
+                  <img src="{{item.icon}}" />
+                </div>
+                {{item.text}}
+              </ion-toggle>
+
+              <!-- Single select -->
+              <label
+                     ng-repeat="item in items"
+                     ng-if="!multiSelect"
+                     class="item item-text-wrap"
+                     ng-click='validateSingle(item)'>
+                <div class="fancy-select-icon" ng-if="item.icon != null">
+                  <i class="icon-{{item.text}}" style="background-image: url({{item.icon}})"></i>
+                </div>
+                {{item.text}}
+              </label>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
+  </body>
+</html>

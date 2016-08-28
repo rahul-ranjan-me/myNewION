@@ -1,0 +1,53 @@
+<ion-view view-title="Inbox">
+	<ion-content>
+		
+		<div class="message">
+			<div class="row" ng-if="!inboxMessages.length">
+				<h3>No Message found</h3>
+			</div>
+
+			<div ng-if="!search">
+				<ion-infinite-scroll on-infinite="loadMore()" distance="1%" immediate-check="false" spinner="false"></ion-infinite-scroll>
+
+				<div class="details-cont" ng-repeat="message in inboxMessages" ng-if="inboxMessages.length" ng-click="readAcknowledge(message, 'message_head')">
+					<div class="row wrap inbox">
+
+					
+						<div class="col col-20">
+							<span class="legendMessage">
+								{{message.message_head.charAt(0).toUpperCase()}}
+							</span>
+						</div>
+						<div class="col col-80">
+							<span class="pull-right attachment" ng-if="message.attachment_path"><a href="{{message.attachment_path}}" target="_blank"><i class="icon ion-ios-download"></i></a></span>
+							<span class="pull-right date">{{message.message_date}}</span>
+							<h4>{{message.message_head}}</h4>
+							<p class="message-body">{{message.message_text}}</p>
+									
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div ng-if="search">
+				<div class="row" ng-repeat="message in inboxMessages" ng-if="inboxMessages.length" ng-click="readAcknowledge(message, 'alertName')">
+					<div class="col col-20">
+							<span class="legendMessage">
+								{{message.alertName.charAt(0).toUpperCase()}}
+							</span>
+						</div>
+						<div class="col col-80">
+							<span class="pull-right attachment" ng-if="message.attachment"><a href="http://{{message.attachment}}" target="_blank"><i class="icon ion-ios-download"></i></a></span>
+							<span class="pull-right date">{{message.sendDate}}</span>
+							<h4>{{message.alertName}}</h4>
+							<p>{{message.message}}</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

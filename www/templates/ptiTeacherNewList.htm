@@ -1,0 +1,25 @@
+<ion-view view-title="Document">
+	<ion-content class="newQueryList teacher-attendance">
+
+		<div ng-if="!newQueries.length">No query exists</div>
+
+		<div ng-if="newQueries.length">
+			<div class="details-cont" ng-repeat="query in newQueries" ng-if="!query.REPLY">
+				<div class="wrap">
+
+					<h5>Parent of {{query.STUDENTNAME}}
+						<span class="pull-right"><strong>Date:</strong> {{query.QUERYDATE}}</span>
+					</h5>
+					<p>{{query.QUERY}}</p>
+					
+					<div class="form-control button-action">
+						<input type="button" class="btn-submit" ng-click="replyQuery(query)" value="Reply" />
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

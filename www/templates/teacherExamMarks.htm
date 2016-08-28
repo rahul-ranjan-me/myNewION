@@ -1,0 +1,46 @@
+<ion-view view-title="Search Exam" class="attendance">
+	<ion-content class="teacher-exam-marks">
+		
+		<div class="common-form">
+			<div class="form-control">
+				<label for="class">Class</label>
+				<select name="class" id="class"
+			      ng-options="option.className for option in classes track by option.classCode"
+			      ng-model="class" ng-change="getSections(class.classCode)">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="section">Section</label>
+				<select name="class" id="class"
+			      ng-options="option.sectionName for option in sections track by option.sectionCode"
+			      ng-model="section" ng-change="fetchExamName(class.classCode, section.sectionCode)">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="examName">Exam Name</label>
+				<select name="examName" id="examName"
+			      ng-options="option.examname for option in examNames track by option.examcode"
+			      ng-model="examName" ng-change="fetchSubjects(class.classCode, section.sectionCode, examName.examcode)">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="subject">Subject</label>
+				<select name="subject" id="subject"
+			      ng-options="option.subjectname for option in subjects track by option.subjectcode"
+			      ng-model="subject">
+				      <option>Please select</option>
+			      </select>
+			</div>
+
+			<div class="form-control button-action">
+				<input type="button" ng-click="getExamDetails(class.classCode, section.sectionCode, examName.examcode, subject.subjectcode)" value="Search" />
+
+				<!-- ng-disabled="(!class.classCode || !section.sectionCode || !examName.examNameCode || !subject.subjectCode)" -->
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

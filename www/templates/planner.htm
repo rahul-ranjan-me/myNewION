@@ -1,0 +1,64 @@
+<ion-view view-title="School Planner">
+	<ion-content class="slideContainer">
+		<div class="label-button bar bar-header bar-energized">	
+			<button class="button pull-left"
+			      ng-click="previous()" ng-disabled="slideIndex == 0">
+				<i class="icon ion-ios-arrow-back"></i>
+				<i class="icon ion-ios-arrow-back"></i>
+			</button>
+			<span class="grid-label">{{curDayLabel}}</span>
+			<button class="button pull-right"
+			      ng-click="next()" ng-disabled="slideIndex == 11">
+				<i class="icon ion-ios-arrow-forward"></i>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</button>
+		</div>     
+		<ion-slide-box on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')" show-pager="false" active-slide="slideIndex">
+			<ion-slide ng-repeat="(i, month) in calenderToRender">
+				<div class="slideContainer" ng-if="i != slideIndex">&nbsp;</div>
+
+				<div class="slideContainer" ng-if="i == slideIndex">
+					<table>
+						<thead>
+							<tr>
+								<th class="columns"><span>Sun</span></th>
+								<th class="columns"><span>Mon</span></th>
+								<th class="columns"><span>Tue</span></th>
+								<th class="columns"><span>Wed</span></th>
+								<th class="columns"><span>Thu</span></th>
+								<th class="columns"><span>Fri</span></th>
+								<th class="columns"><span>Sat</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="rowsDay in month.days">
+								<td class="columns" ng-repeat="day in rowsDay" ng-style="{backgroundColor:day.bgColor, color:day.fontColor}" ng-click="showEvent(day.date)">
+								  	<span ng-if="day.type">&nbsp;</span>
+						          	<span ng-if="!day.type" ng-style="{color:day.fontColor}">{{day.date}}</span>			          	
+							    </td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="event-details planner">
+						<h3>
+							<span ng-if="eventDetails.eventDetails.length">Event details for month {{curDayLabel}}</span>
+							<span ng-if="!eventDetails.eventDetails.length">No event scheduled for month {{curDayLabel}}</span>
+						</h3>
+						<div class="details-cont" ng-repeat="event in eventDetails.eventDetails" ng-if="eventDetails.eventDetails.length">
+							<div class="wrap">
+								<p class="pull-right">{{event.fromDate}} <br />to<br/>{{event.toDate}}</p>
+								<h5>{{event.eventName}}</h5>
+								<p class="description">{{event.description}}</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</ion-slide>
+			
+		</ion-slide-box>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

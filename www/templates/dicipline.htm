@@ -1,0 +1,18 @@
+<ion-view view-title="Discipline">
+	<ion-content class="discipline">
+		<div class="achievements-container">
+			<h4 ng-if="!disciplines.length">No discipline data</h4>
+			<div class="" ng-repeat="discipline in disciplines" ng-if="disciplines.length">
+				<div class="details-cont">
+					<div class="wrap">
+						<p class="pull-right"><strong>Date</strong> <br /> {{discipline.reportDate}}</p>
+						<p><strong>Discipline</strong> : {{discipline.discipline}}</p>
+						<p><strong>Reported by</strong> : {{discipline.reportBy}}</p>
+						<p><strong>class</strong> : {{discipline.class}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

@@ -1,0 +1,27 @@
+<ion-view view-title="PTI" class="ptiDetails">
+	<ion-content>
+		<div class="interContainer">
+			<div class="interactions">
+				<div class="interaction details-cont" ng-repeat="interaction in interactionDetail">
+					<div class="wrap">
+						<h5>{{interaction.subject}}</h5>
+						<div class="details-cont query">
+							<div class="wrap">
+								<p><strong>{{interaction.reportDate}}</strong></p>
+								<p>{{interaction.query}}</p>
+							</div>
+						</div>
+
+						<div class="details-cont reply">
+							<div class="wrap">
+								<p><strong>{{interaction.replyDate}}</strong></p>
+								<p>{{interaction.reply}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

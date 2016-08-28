@@ -1,0 +1,46 @@
+<ion-view view-title="Upload document" class="Upload Doc">
+	<ion-content class="teacher-exam-marks">
+		
+		<div class="common-form">
+			<div class="form-control">
+				<label for="class">Class</label>
+				<select name="class" id="class"
+			      ng-options="option.className for option in classes track by option.classCode"
+			      ng-model="class" ng-change="getSections(class.classCode)">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="section">Section</label>
+				<select name="class" id="class"
+			      ng-options="option.sectionName for option in sections track by option.sectionCode"
+			      ng-model="section">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="documentType">Doc. type</label>
+				<select name="documentType" id="documentType"
+			      ng-options="option.doc_type_name for option in documentTypes track by option.doc_type_name"
+			      ng-model="documentType">
+				      <option>Please select</option>
+			      </select>
+			</div>
+			<div class="form-control">
+				<label for="file">File Browse</label>
+				<input type="file" id="file" fileread="file" />
+			</div>
+			<div class="form-control">
+				<label for="remark">File Browse</label>
+				<textarea id="remark" ng-model="remark"></textarea>
+			</div>
+
+			<div class="form-control button-action">
+				<input type="button" ng-click="uploadDoc(class.classCode, section.sectionCode, documentType.doc_type_code, file, remark)" value="Upload" />
+
+				<!-- ng-disabled="(!class.classCode || !section.sectionCode || !examName.examNameCode || !subject.subjectCode)" -->
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

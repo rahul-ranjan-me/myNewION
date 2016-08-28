@@ -1,0 +1,26 @@
+<ion-view view-title="Document">
+	<ion-content class="newQueryList">
+		
+		<div ng-if="!repliedQueries.length">No query exists</div>
+		<div  ng-if="repliedQueries.length">
+			<div class="details-cont" ng-repeat="query in repliedQueries" ng-if="query.REPLY">
+				<div class="wrap">
+
+					<h4>Parent of {{query.STUDENTNAME}}</h4>
+					
+					<div class="parentQuery">
+						<h5>Parent query <span class="pull-right"><strong>Date: </strong>{{query.QUERYDATE}}</span></h5>
+						<p>{{query.QUERY}}</p>
+					</div>
+					
+					<div class="replyQuery">
+						<h5>Parent query <span class="pull-right"><strong>Date: </strong>{{query.REPLIEDDATE}}</span></h5>
+						<p>{{query.REPLY}}</p>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

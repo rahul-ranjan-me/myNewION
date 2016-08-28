@@ -1,0 +1,18 @@
+<ion-view view-title="Achievement">
+	<ion-content>
+		<div class="achievements-container">
+			<h4 ng-if="!achievements.length">No achievements found</h4>
+			<div class="achievements" ng-repeat="achievement in achievements" ng-if="achievements.length">
+				<div class="achievements-row">
+					<p class="pull-right"><strong>Date</strong> {{achievement.awardDate}}</p>
+					<p><strong>Prize</strong> : {{achievement.prize}}</p>
+					<p><strong>Class</strong> : {{achievement.className}}</p>
+					<p><strong>Event</strong> : {{achievement.event}}</p>
+					<p><strong>Venue</strong> : {{achievement.venue}}</p>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>
+

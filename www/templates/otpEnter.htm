@@ -1,0 +1,26 @@
+<ion-view view-title="School Details">
+    <ion-nav-bar class="bar-positive">
+    </ion-nav-bar>
+    <ion-content scroll="false">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="item item-body center-aligned">
+                        <img src="{{affiliationData.school_logo}}" ></img>
+                    </div>
+                <div>
+            <div>
+        </div>
+                    
+                    <label class="item item-input item-floating-label item-filled-label item-custom">
+                        <span class="input-label text-center">Enter OTP</span>
+                        <input type="text" ng-model="otp" placeholder="Enter OTP" 
+                            class="form-control text-center" required></input>
+                    </label>
+                    <div class="padding">
+                        <button class="button button-block button-positive icon ion-android-done-all" 
+                            ng-click="home()">Next</button>
+                    </div>
+    </ion-content>
+    <footer-directive></footer-directive>
+</ion-view>

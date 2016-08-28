@@ -1,0 +1,59 @@
+<ion-view view-title="Attendance" class="attendance">
+	<ion-content class="slideContainer">
+		<div class="label-button bar bar-header bar-energized">	
+			<button class="button pull-left"
+			      ng-click="previous()" ng-disabled="slideIndex == 3">
+			    <i class="icon ion-ios-arrow-back"></i>
+				<i class="icon ion-ios-arrow-back"></i>
+			</button>
+			<span class="grid-label">{{curDayLabel}}</span>
+			<button class="button pull-right"
+			      ng-click="next()" ng-disabled="slideIndex == currentMonth">
+				<i class="icon ion-ios-arrow-forward"></i>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</button>
+		</div>     
+		
+		<ion-slide-box show-pager="false" active-slide="4" on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')"> 
+		
+			<ion-slide ng-repeat="(i, months) in attendance.attendanceMonth">
+				<div class="slideContainer"  ng-if="attendance.attendanceDetails.monthName != months.monthName">
+					&nbsp;
+				</div>
+				<div class="slideContainer" ng-if="attendance.attendanceDetails.monthName == months.monthName">
+					<table>
+						<thead>
+							<tr>
+								<th class="columns"><span>Sun</span></th>
+								<th class="columns"><span>Mon</span></th>
+								<th class="columns"><span>Tue</span></th>
+								<th class="columns"><span>Wed</span></th>
+								<th class="columns"><span>Thu</span></th>
+								<th class="columns"><span>Fri</span></th>
+								<th class="columns"><span>Sat</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="rowsDay in attendance.attendanceDetails.attendance">
+								<td class="columns" ng-repeat="day in rowsDay" ng-style="{backgroundColor:day.bgColor, color:day.fontColor}">
+								  	<span ng-if="day.type">&nbsp;</span>
+						          	<span ng-if="!day.type">{{day.dateString}}</span>			          	
+							    </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</ion-slide>
+			
+		</ion-slide-box>
+
+		<div class="legends">
+			<p ng-repeat = "legend in attendance.legends" ng-style="{color:legend.fontColor}">
+				<span ng-style="{backgroundColor:legend.bgColor}"></span>
+				{{legend.remarks}}
+			</p>
+		</div>
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

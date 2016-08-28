@@ -1,0 +1,31 @@
+<ion-view view-title="Raise Discipline">
+	<ion-content>
+		
+		<h5>You are raising new default for <strong>{{studentName}}</strong></h5>
+		
+		<div class="default-list">
+			<div ng-repeat="defaultType in defaultTypes">
+				<h4>{{defaultType.CategoryName}}</h4>
+				<div class="sub-category" 
+					ng-class="{'selected': subCategory.selected}"
+					ng-repeat="subCategory in defaultType.SubCategoryDetail" 
+					ng-click="selectMe(subCategory)">
+					{{subCategory.subCategoryName}}
+				</div>
+			</div>
+			<h4>Remarks</h4>
+			<textarea id="remarks" class="remarks" ng-model="remarks"></textarea>
+		</div>
+
+
+		
+		<div class="common-form">
+			
+			<div class="form-control button-action">
+				<input type="button" ng-disabled="(!studentName)" ng-click="raiseDiscipline(defaultTypes, remarks)" value="Save" />
+			</div>
+		</div>
+
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

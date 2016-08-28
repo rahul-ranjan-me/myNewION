@@ -1,0 +1,47 @@
+<ion-view view-title="Time Table">
+	<ion-content class="slideContainer timeTable">
+		<div class="label-button bar bar-header bar-energized">	
+			<button class="button pull-left"
+			      ng-click="previous()" ng-disabled="slideIndex == 0">
+				<i class="icon ion-ios-arrow-back"></i>
+				<i class="icon ion-ios-arrow-back"></i>
+			</button>
+			<span class="grid-label">{{curDayLabel}}</span>
+			<button class="button pull-right"
+			      ng-click="next()" ng-disabled="slideIndex == 5">
+				<i class="icon ion-ios-arrow-forward"></i>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</button>
+		</div>     
+		<ion-slide-box on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')" show-pager="false" active-slide="slideIndex">
+			<ion-slide ng-repeat="days in timetableSet">
+
+				<div class="slideContainer">
+
+					<table>
+						<thead>
+							<tr class="header">
+								<th class="columns"><span>Lecture</span></th>
+								<th class="columns"><span>Subject</span></th>
+								<th class="columns"><span>Teacher</span></th>
+								<th class="columns" style="width:100px;"><span>Lec. Type</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="curDay in days.timetable">
+								<td class="columns">{{curDay.lecture}}</td>
+								<td class="columns">{{curDay.subject}}</td>
+								<td class="columns">{{curDay.teacher}}</td>
+								<td class="columns">{{curDay.lecturetype}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</ion-slide>
+			
+		</ion-slide-box>
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

@@ -1,0 +1,24 @@
+<ion-view view-title="School Details">
+   <ion-content scroll="false">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="item item-body center-aligned">
+                        <img src="{{affiliationData.school_logo}}" ></img>
+                    </div>
+                <div>
+            <div>
+        </div>
+
+        <div class="list list-inset">
+            <label class="item item-input item-floating-label item-filled-label item-custom">
+                <span class="input-label text-center">Student Id</span>
+                <input type="text" ng-model="studentId" placeholder="Enter Student Id" class="form-control text-center" required></input>
+            </label>
+            <div class="padding">
+                <button class="button button-block button-positive icon ion-android-done-all" ng-click="validateStudentId()">Next</button>
+            </div>
+        </div>
+    </ion-content>
+    <footerc-directive></footerc-directive>
+</ion-view>

@@ -1,0 +1,30 @@
+<ion-view view-title="Affiliation Form">
+    <ion-nav-bar class="bar-positive">
+    </ion-nav-bar>
+    <ion-content scroll="false">
+        <div class = "row">
+            <div class = "col text-center">
+                <div class="item item-body transparant ">
+                    <img class="full-image" src="img/logo-new.png">
+                </div>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col text-center">
+                <div class="list list-inset">
+                    <div>{{affiliationData}}</div>
+                    <label class="item item-input item-floating-label item-filled-label item-custom">
+                        <span class="input-label text-center">School Affiliation Number</span>
+                        <input type="text" ng-model="affiliationNumber" placeholder="School Affiliation Number" 
+                            class="form-control text-center" required></input>
+                    </label>
+                    <div class="padding">
+                        <button class="button button-block button-positive icon ion-android-done-all" 
+                            ng-click="saveAffiliation()">SUBMIT</button>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </ion-content>
+    <footerc-directive></footerc-directive>
+</ion-view>

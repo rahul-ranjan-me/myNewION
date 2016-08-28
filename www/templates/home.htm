@@ -1,0 +1,54 @@
+<ion-view view-title="Home">
+	<ion-content header-shrink scroll-event-interval="5">
+		<div id="profile" class="home-hello center-aligned">
+			<img class="image-profile" src="{{menuData.photo}}"/>
+			<div id="name-card" class="item item-text-wrap">
+				<div style="float:left;">
+					<h1 class="home-name-card">{{menuData.studentName}}</h1>
+					<h2 class="home-name-card">Class {{menuData.classname}}</h2>
+				</div>
+				<img class="image-profile-avtar" src="{{menuData.photo}}"/>
+				
+				
+				<!--h2>{{menuData.classTeacher}}</h2-->
+			</div>
+		</div>
+		<div ng-repeat="e in entries" ng-if="$index%2==0" class="row">
+			<div class="card col home">
+				<a class="item item-text-wrap center-aligned " href="#/menu/{{entries[$index].path}}?url={{entries[$index].url}}">
+					<i class="icon"><img ng-src="img/{{entries[$index].icon}}" class="icon-large"/></i>
+					<h2>{{entries[$index].title}}</h2>
+				</a>
+			</div>
+			<div class="card col home">
+				<a class="item item-text-wrap center-aligned " href="#/menu/{{entries[$index+1].path}}?url={{entries[$index+1].url}}">
+					<i class="icon"><img ng-src="img/{{entries[$index+1].icon}}" class="icon-large"/></i>
+					<h2>{{entries[$index+1].title}}</h2>
+				</a>
+			</div>
+			<!--div class="card col home">
+				<a class="item item-text-wrap center-aligned " href="#/menu/{{entries[$index+2].path}}">
+					<i class="icon"><img ng-src="img/{{entries[$index+2].icon}}" class="icon-large"/></i>
+					<h2>{{entries[$index+2].title}}</h2>
+				</a>
+			</div-->
+		</div>
+
+		<div class="list card">
+			<!--a href="tel:{{phoneNumber}}" class="item item-icon-left">
+				<i class="icon ion-ios-telephone"></i>
+				Call us
+			</a-->
+			<a class="item item-icon-left" href="#/menu/location">
+				<i class="icon icon-small"><img src="img/LocationBlue.fw.png"/></i>
+				Locate School / Get directions
+			</a>
+
+			<a href="#" class="item item-icon-left" ng-click="getDirections($event)">
+				<i class="icon icon-small"><img src="img/WebsiteBlue.fw.png"/></i>
+				School Website
+			</a>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

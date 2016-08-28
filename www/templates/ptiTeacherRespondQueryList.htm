@@ -1,0 +1,19 @@
+<ion-view view-title="Document">
+	<ion-content class="newQueryList teacher-attendance">
+		
+		<div class="details-cont" >
+			<div class="wrap">
+
+				<h5>Parent of {{curQuery.STUDENTNAME}}</h5>
+				<p>{{curQuery.QUERY}}</p>
+				<textarea ng-model="reply" placeholder="Write your reply here..."></textarea>
+
+				<div class="form-control button-action">
+					<input type="button" class="btn-submit" ng-disabled="!reply" ng-click="saveReply(reply)" value="Reply" />
+				</div>
+			</div>
+		</div>
+		
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

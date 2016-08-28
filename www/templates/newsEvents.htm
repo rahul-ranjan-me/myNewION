@@ -1,0 +1,49 @@
+<ion-view view-title="News and events">
+	<ion-content class="slideContainer newsEventsWrapper">
+		<div class="label-button bar bar-header bar-energized">	
+			<button class="button pull-left"
+			      ng-click="previous()" ng-disabled="slideIndex == 0">
+				<i class="icon ion-ios-arrow-back"></i>
+				<i class="icon ion-ios-arrow-back"></i>
+			</button>
+			<span class="grid-label">{{curDayLabel}}</span>
+			<button class="button pull-right"
+			      ng-click="next()" ng-disabled="slideIndex == 11">
+				<i class="icon ion-ios-arrow-forward"></i>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</button>
+		</div>     
+		<ion-slide-box on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')" show-pager="false" active-slide="slideIndex">
+			<ion-slide ng-repeat="month in newsEventsSet">
+
+				<div class="slideContainer">
+					<div ng-if="!month.news.length" class="newsEvents">
+						<p class="noNews">No news avaialble for this month</p>
+					</div>
+					<div ng-if="month.news.length">
+						<div class="newsEvents row" ng-repeat="newsEvents in month.news">
+							<div class="fromTo col col-30">
+								{{newsEvents.fromDate}} <br /> to <br /> {{newsEvents.toDate}}
+							</div>
+							<div class="message col-60">
+								<div class="row" ng-class="{'show' : newsEvents.full}">
+									<div class="col">
+										<h4>{{newsEvents.subject}}</h4>
+										<p>{{newsEvents.message}}</p>
+									</div>
+									<div class="attachments col col-15" ng-if="newsEvents.attachment">
+										<a href="http://{{newsEvents.attachment}}" target="_blank"><i class="icon ion-ios-download"></i></a>
+									</div>
+								</div>
+								<p class="read-more" ng-click="readMoreLess(newsEvents)"><span ng-if="newsEvents.full">Show less..</span><span ng-if="!newsEvents.full">Show More..</span></p>						
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</ion-slide>
+			
+		</ion-slide-box>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

@@ -1,0 +1,28 @@
+<ion-view view-title="Homework">
+	<ion-content class="homework" on-swipe-left="slideHasChanged('decrement')" on-swipe-right="slideHasChanged('increment')">
+		<div class="label-button bar bar-header bar-energized">	
+			<button class="button pull-left"
+			      ng-click="getResults('increment')">
+				<i class="icon ion-ios-arrow-back"></i>
+				<i class="icon ion-ios-arrow-back"></i>
+			</button>
+			<span class="grid-label">{{hwWork.hwDate}}</span>
+			<button class="button pull-right"
+			      ng-click="getResults('decrement')" ng-disabled="slideIndex == 0">
+				<i class="icon ion-ios-arrow-forward"></i>
+				<i class="icon ion-ios-arrow-forward"></i>
+			</button>
+		</div>
+		<div class="howework-container">
+			<h5 ng-if="hwWork.hwDtls != undefined && hwWork.hwDtls.length == 0">No homework found</h5>
+
+			<div class="details-cont" ng-repeat="hw in hwWork.hwDtls" ng-if="hwWork.hwDtls.length > 0">
+				<div class="wrap">
+					<h5>{{hw.subjectName}}</h5>
+					<p>{{hw.homework}}</p>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

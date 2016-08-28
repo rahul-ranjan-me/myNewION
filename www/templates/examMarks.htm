@@ -1,0 +1,40 @@
+<ion-view view-title="Exam marks Detail">
+	<ion-content class="examMarks">
+		<div class="mark-sheet-cont">
+			<div class="mark-sheet">
+			
+				<div class="subjects" ng-repeat="marks in examMarksDetails">
+					<h5>{{marks.subject}}</h5>
+					<div class="wrapper-marks">
+						<table>
+							<thead>
+								<tr>
+									<th>ACT</th>
+									<th>SUB ACT</th>
+									<th>MO</th>
+									<th>MM</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="mark in marks.marks">
+									<td>{{mark.activity}}</td>
+									<td>-</td>
+									<td>{{mark.marksObtained}}</td>
+									<td>{{mark.maxMarks}}</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- div class="row">
+							<div class="col label" ng-repeat="mark in marks.marks">{{mark.activity}}</div>
+						</div>
+						<div class="row">
+							<div class="col" ng-repeat="mark in marks.marks">{{mark.marksObtained}}/{{mark.maxMarks}}</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

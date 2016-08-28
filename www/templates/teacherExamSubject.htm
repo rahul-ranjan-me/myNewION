@@ -1,0 +1,14 @@
+<ion-view view-title="Exam Result">
+	<ion-content class="exam-subject">
+		
+		<h4>{{subjects[0].SUBJECTNAME}} - {{subjects[0].EXAMNAME}}</h4>
+
+		<div class="details-cont" ng-repeat="subject in subjects" ng-click="gotoDetailView(subject)">
+			<div class="wrap">
+				<p>{{subject.EXAMNAMECODE}} - {{subject.ACTIVITYNAME}}</p>
+			</div>
+		</div>
+
+	</ion-content>
+	<footer-directive></footer-directive>
+</ion-view>

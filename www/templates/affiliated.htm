@@ -1,0 +1,48 @@
+<ion-view view-title="School Details">
+    <ion-nav-bar class="bar-positive">
+    </ion-nav-bar>
+    <ion-content scroll="false">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="item item-body center-aligned">
+                        <img src="{{affiliationData.school_logo}}" ></img>
+                    </div>
+                <div>
+            <div>
+        </div>
+        <div class="row">
+            <div class="col col-33 positive-bg" style="color: white;border: 1px solid; border-color: #387ef5; border-bottom-color: white;">
+                School Name
+            </div>
+            <div class="col col-67" style="border: 1px solid;border-color: #387ef5;">
+                {{affiliationData.schoolName}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-33 positive-bg" style="color: white;border: 1px solid;    border-color: #387ef5;      border-top: none;   border-bottom-color: white;">
+                School Address
+            </div>
+            <div class="col col-67" style="border: 1px solid;border-color: #387ef5; border-top:none;">
+                {{affiliationData.schoolAddress}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-33 positive-bg" style="color: white;border: 1px solid;  border-top:none;  border-color: #387ef5;">
+                School Website
+            </div>
+            <div class="col col-67" style="border: 1px solid;border-color: #387ef5; border-top:none;">
+                {{affiliationData.ip}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="padding">
+                        <button class="button button-block button-positive icon ion-chevron-right icon-right" 
+                            ng-click="home()">NEXT</button>
+                    </div>
+            </div>
+        </div>
+    </ion-content>
+    <footerc-directive></footerc-directive>
+</ion-view>
