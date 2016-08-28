@@ -1389,12 +1389,13 @@ angular.module('aes.services', ['ionic', 'ngCordova', 'aes.constants'])
 .directive("footerDirective", function($timeout, GetSchoolInfo) {
     return {
         restrict : "E",
-        template : "<ion-footer-bar><div class='copyRight' ng-if='school_link'><a href={{school_link}} target='blank'><img src={{school_logo}} style='height:43px'></a></div><div class='poweredBy'><a href='http://www.candoursystems.com/' target='blank'> <img src='img/logo-candourSystems.png' style='height:43px'> </a></div></ion-footer-bar>",
+        template : "<ion-footer-bar><div class='copyRight' ng-if='school_link'><a href={{school_link}} target='blank'><img src={{school_logo}} style='height:41px'></a></div><div class='poweredBy'><a href='http://www.candoursystems.com/' target='blank'> <img src='img/logo-candourSystems.png' style='height:41px'> </a></div></ion-footer-bar>",
         link: function(scope,elem, attr){
             $timeout(function(){
+                console.log(GetSchoolInfo.getSchoolInfo().clientWebSite);
                 scope.school_link = GetSchoolInfo.getSchoolInfo().clientWebSite;
                 scope.school_logo = "http://"+GetSchoolInfo.getSchoolInfo().clientFooterLogo;
-            },100);
+            },500);
         }
     };
 })
@@ -1402,7 +1403,7 @@ angular.module('aes.services', ['ionic', 'ngCordova', 'aes.constants'])
 .directive("footercDirective", function($timeout, GetSchoolInfo) {
     return {
         restrict : "E",
-        template : "<ion-footer-bar><div footerC='true' class='poweredBy'><a href='http://www.candoursystems.com/' target='blank'> <img src='img/logo-candourSystems.png' style='height:43px'> </a></div></ion-footer-bar>",
+        template : "<ion-footer-bar><div class='poweredBy'><a href='http://www.candoursystems.com/' target='blank'> <img src='img/logo-candourSystems.png' style='height:41px'> </a></div></ion-footer-bar>",
         link: function(scope,elem, attr){
             $timeout(function(){
                 scope.school_link = GetSchoolInfo.getSchoolInfo().clientWebSite;

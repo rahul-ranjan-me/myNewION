@@ -1423,6 +1423,12 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         });
     };
 
+    document.addEventListener("deviceready", onDeviceReady, false);
+            
+    function onDeviceReady(){
+        alert('here');
+    }
+
     $scope.uploadDoc = function(classCode, sectionCode, documentType, file, remark){
         var fileExtension = file.name.substring(file.name.lastIndexOf('.')+1, file.name.length),
             fileName = file.name.substring(0, file.name.lastIndexOf('.')),
@@ -1435,10 +1441,14 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
                 "fileType":fileExtension,
                 "remark":remark
             };
+            
 
             console.log(file)
 
         if(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension ==='pdf'){
+            console.log(FileTransfer)
+
+
             // document.addEventListener("deviceready", onDeviceReady, false);
             // alert(FileTransfer)
             // function onDeviceReady() {
@@ -1576,9 +1586,8 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
     }
 })
 
-.controller('ptiController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $state, PTIServices) {
+.controller('ptiController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $stateParams, $state, PTIServices) {
     var studentId = $rootScope.studentId;
-
     $ionicLoading.show({
         content: 'Loading',
         animation: 'fade-in',
@@ -1632,7 +1641,7 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         comments : ''
     };
 
-    $scope.countries_text_multiple = 'Choose countries';
+    $scope.countries_text_multiple = 'Choose teachers';
     $scope.teacherList = angular.copy(PTIServices.getPTIData().teacherList);
     var teacherListToPrint = [];
     for(var i = 0 ; i<$scope.teacherList.length; i++){
@@ -1674,117 +1683,7 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
                 template: '<p>Your have raised a new query</p>'
             });
             alertPopup.then(function(res) {
-                $state.go('menu.pti');
-            });
-            
-            $ionicLoading.hide();
-        }, function(error) {
-            console.error('err', error);
-            $ionicLoading.hide();
-        });
-    };
-
-})
-
-.controller('ptiController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $state, PTIServices) {
-    var studentId = $rootScope.studentId;
-
-    $ionicLoading.show({
-        content: 'Loading',
-        animation: 'fade-in',
-        showBackdrop: true,
-        maxWidth: 200,
-        showDelay: 0
-    });
-
-    PTIServices.getPtiDetails(studentId).then(function(interactions){
-        var dataToSet = {},
-            createInteractionByTeacher = {};
-        for(var i in interactions.messageHistory){
-            var teacherNode = interactions.messageHistory[i].teacher.split(' ').join('');
-            if(!createInteractionByTeacher[teacherNode]){
-                createInteractionByTeacher[teacherNode] = {
-                    teacherName : interactions.messageHistory[i].teacher,
-                    interactions : []
-                }
-            }
-
-            createInteractionByTeacher[teacherNode].interactions.push(interactions.messageHistory[i]);
-        }
-
-        dataToSet.interactions = createInteractionByTeacher;
-        dataToSet.teacherList = interactions.subjectTeacher;
-        $scope.ptis = dataToSet.interactions;
-
-        PTIServices.setPTIData(dataToSet);
-        $ionicLoading.hide();
-    }, function(error) {
-        console.error('err', error);
-        $ionicLoading.hide();
-    });
-
-    $scope.detailPTI = function(teacherID){
-       $state.go('menu.ptiDetails', {teacherID: teacherID})
-    };
-})
-
-.controller('ptiDetailsController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $stateParams, PTIServices) {
-    var teacherToShow = PTIServices.getPTIData().interactions[$stateParams.teacherID];
-    $scope.interactionDetail = teacherToShow.interactions;
-})
-
-.controller('ptiNewController', function($scope, $rootScope, $ionicPopup, $ionicLoading, $stateParams, $state, PTIServices) {
-    var studentId = $rootScope.studentId;
-
-    $scope.payload = {
-        un : studentId,
-        subj : '',
-        comments : ''
-    };
-
-    $scope.countries_text_multiple = 'Choose countries';
-    $scope.teacherList = angular.copy(PTIServices.getPTIData().teacherList);
-    var teacherListToPrint = [];
-    for(var i = 0 ; i<$scope.teacherList.length; i++){
-        teacherListToPrint.push({
-            id : $scope.teacherList[i].teacherCode,
-            text: $scope.teacherList[i].teacherName
-        })
-    }
-    $scope.teacherListToPrint = teacherListToPrint;
-
-    $scope.val =  {multiple: null};
-
-    $scope.calcDisabled = function(){
-        var status = false;
-        for(var i in $scope.payload){
-            if(!$scope.payload[i]){
-                status = true;
-                break;
-            }
-        }
-        return status;
-    };
-
-    $scope.sendMessage = function(){
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-
-        $scope.payload.tecId = $scope.val.multiple.split(';').join(',');
-        
-        PTIServices.saveNewPti($scope.payload).then(function(response){
-
-            var alertPopup = $ionicPopup.alert({
-                title: 'Success',
-                template: '<p>Your have raised a new query</p>'
-            });
-            alertPopup.then(function(res) {
-                $state.go('menu.pti');
+                $state.transitionTo('menu.home', $stateParams, {reload:true, notify:true});
             });
             
             $ionicLoading.hide();
@@ -1855,6 +1754,10 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
             var alertPopup = $ionicPopup.alert({
                 title: 'Success',
                 template: '<p>Your reply has been saved</p>'
+            });
+
+            alertPopup.then(function(res) {
+                $state.go('menu.getNewPTIQueries');
             });
 
             $ionicLoading.hide();

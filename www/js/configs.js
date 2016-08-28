@@ -365,7 +365,7 @@ angular.module('aes.configs', [])
     }
   })
 
-  .state('menu.ptiTeacherRespondQueryList', {
+   .state('menu.ptiTeacherRespondQueryList', {
     url: '/savePTIReplyByTeacher',
     views: {
       'menuContent': {
