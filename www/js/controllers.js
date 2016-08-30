@@ -1,4 +1,5 @@
-angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.calendar', 'ui.bootstrap'])
+angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.calendar', 'ui.bootstrap', 'ionic-datepicker'])
+
 .controller('rootController', function(DB, $ionicLoading, $state, $ionicPlatform, 
         AffiliationService, AffiliationDTO){
     $ionicLoading.show({
@@ -935,7 +936,7 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
     });
 })
 
-.controller('HomeworkController', function($scope, $rootScope, HomeworkService, $ionicLoading) {
+.controller('HomeworkController', function($scope, $rootScope, HomeworkService, $ionicLoading, ionicDatePicker ) {
     var studentId = $rootScope.studentId,
         date = new Date(),
         counter = 0;        
@@ -973,6 +974,29 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
                 $scope.getResults('decrement');            
             }
         }
+    };
+
+    function daydiff(first, second) {
+        return Math.round((second-first)/(1000*60*60*24));
+    }
+
+
+    var ipObj1 = {
+        callback: function (val) {  //Mandatory
+            counter = Math.abs(daydiff(new Date(), new Date(val)))-1;
+            fetchHomework(counter);
+        },
+        from: new Date(2012, 1, 1), //Optional
+        to: new Date(), //Optional
+        inputDate: new Date(),      //Optional
+        mondayFirst: true,          //Optional
+        disableWeekdays: [0],       //Optional
+        closeOnSelect: true,       //Optional
+        templateType: 'popup'       //Optional
+    };
+
+    $scope.showCalendar = function(){
+        ionicDatePicker.openDatePicker(ipObj1);
     };
 
     
