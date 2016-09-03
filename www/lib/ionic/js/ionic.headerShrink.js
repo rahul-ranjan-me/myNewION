@@ -30,15 +30,15 @@ angular.module('ionic.ion.headerShrink', [])
       
       var header = $document[0].body.querySelector('ion-header-bar');
       var headHeight = header.offsetHeight;
-      console.log('head height '+headHeight);
+      
       
       var profile = $document[0].body.querySelector('#profile');
       var headerHeight = profile.offsetHeight;
-      console.log('header height '+headerHeight);
+     
       
       var nameCard = $document[0].body.querySelector('#name-card');
       var nameCardHeight = nameCard.offsetHeight;
-      console.log('nameCard height '+nameCardHeight);
+      
 
       function onScroll(e) {
         var scrollTop = e.target.scrollTop;
@@ -48,7 +48,7 @@ angular.module('ionic.ion.headerShrink', [])
         } else {
           y = 0;
         }
-        console.log(scrollTop);
+        
 
 
         ionic.requestAnimationFrame(function() {

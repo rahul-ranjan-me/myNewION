@@ -163,11 +163,13 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
 				} else {
                     $rootScope.studentId = studentIdData[0];
                     OtpService.storeStudentId(studentIdData[0]).then(function(success){
+                    
                     if(success) {
                         
                         //AffiliationDTO.setAffiliationData(data);
                        $state.go("menu.home");//send to otp entering page
                     }
+
                     $ionicLoading.hide();
                 })
 					 
@@ -350,10 +352,10 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
     
     var studentId = $rootScope.studentId,
         date = new Date(),
-        month = date.getMonth() < 10 ? '0'+(date.getMonth()+1) : date.getMonth(),
+        month = date.getMonth() < 9 ? '0'+(date.getMonth()+1) : date.getMonth()+1,
         dateToFetch = '01'+month+date.getFullYear();
 
-        $scope.currentMonth = date.getMonth();
+        $scope.currentMonth =  date.getMonth() < 3 ? date.getMonth() + 9 : date.getMonth()-3;
 
     $ionicLoading.show({
         content: 'Loading',
@@ -422,7 +424,7 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
 
 
     var curDate = new Date();
-    $scope.slideIndex = curDate.getMonth(),
+    $scope.slideIndex = curDate.getMonth() < 3 ? curDate.getMonth() + 9 : curDate.getMonth()-3,
     curSlide = $scope.slideIndex;
     
     $scope.disableSwipe = function() {
@@ -465,12 +467,12 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
 
     $scope.slideHasChanged = function($index, type){
         if(type === 'right'){
-            if($scope.slideIndex !== 3){
+            if($scope.slideIndex !== 0){
                 $scope.previous(true);
             }
             
         }else if(type ==='left') {
-            if($scope.slideIndex !== 7){
+            if($scope.slideIndex !== $scope.currentMonth){
                $scope.next(true);
             }
             
@@ -1401,8 +1403,13 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
     };
 })
 
-.controller('uploadDocsTeacherController', function($scope, $rootScope, $cordovaFileTransfer, $ionicPopup, $ionicLoading, TeacherExamMarksService, DocumentTeacherService, $ionicPopup, $stateParams, $state) {
-    var studentId = $rootScope.studentId;
+.controller('uploadDocsTeacherController', function($scope, 
+    $rootScope, $cordovaFileTransfer,
+    $ionicPopup, $ionicLoading, 
+    TeacherExamMarksService, DocumentTeacherService, 
+    $ionicPopup, $stateParams, $state) {
+    var studentId = $rootScope.studentId,
+    tempPath;
     $ionicLoading.show({
         content: 'Loading',
         animation: 'fade-in',
@@ -1447,71 +1454,95 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         });
     };
 
-    document.addEventListener("deviceready", onDeviceReady, false);
-            
-    function onDeviceReady(){
-        alert('here');
-    }
+    document.querySelector('#fileupload').onchange = function(e) {
+      var files = this.files;
 
-    $scope.uploadDoc = function(classCode, sectionCode, documentType, file, remark){
-        var fileExtension = file.name.substring(file.name.lastIndexOf('.')+1, file.name.length),
-            fileName = file.name.substring(0, file.name.lastIndexOf('.')),
-            params = { 
-                "classCode":classCode,
-                "sectionCode":sectionCode,
-                "fileName":file,
-                "createdBy":studentId,
-                "documentType":documentType,
-                "fileType":fileExtension,
-                "remark":remark
-            };
-            
+      window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+        // Duplicate each file the user selected to the app's fs.
+        for (var i = 0, file; file = files[i]; ++i) {
 
-            console.log(file)
+          // Capture current iteration's file in local scope for the getFile() callback.
+          (function(f) {
+            fs.root.getFile(f.name, {create: true, exclusive: true}, function(fileEntry) {
 
-        if(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension ==='pdf'){
-            console.log(FileTransfer)
+                  fileEntry.createWriter(function(fileWriter) {
+                    fileWriter.write(f); // Note: write() can take a File or Blob object.
+                  }, errorHandler);
+            }, errorHandler);
+          })(file);
+
+        }
+      }, errorHandler);
 
 
-            // document.addEventListener("deviceready", onDeviceReady, false);
-            // alert(FileTransfer)
-            // function onDeviceReady() {
-            //    // as soon as this function is called FileTransfer "should" be defined
-            //    alert(FileTransfer);
-            // }
-            // var options = {
-            //     fileKey: "avatar",
-            //     fileName: "image.png",
-            //     chunkedMode: false,
-            //     mimeType: "image/png"
-            // };
-            // $cordovaFileTransfer.upload("ftp://lpisschoolkn.org/uploadfile/", file.name, options).then(function(result) {
-            //     alert("SUCCESS: " + JSON.stringify(result.response));
-            // }, function(err) {
-            //     console.log("ERROR: " + JSON.stringify(err));
-            // }, function (progress) {
-            //     // constant progress updates
-            // });
-            // // DocumentTeacherService.saveDocument(params).then(function(response){
-            // //     $ionicPopup.alert({
-            // //         title: 'Success',
-            // //         template: '<p>File uploaded successfully.</p>'
-            // //     });
+      function errorHandler(error) {
+          alert("ERROR: " + error.code)
+       }
 
-            // //     $ionicLoading.hide();
-            // // }, function(error) {
-            // //     console.error('err', error);
-            // //     $ionicLoading.hide();
-            // // });
-        }else{
-            $ionicPopup.alert({
-                title: 'Error',
-                template: '<p>Please choose jpg or pdf files only.</p>'
-            });
+    };
+
+   
+    $scope.uploadDoc = function(classCode, sectionCode, documentType, fileObj, remark, event){
+        var type = window.TEMPORARY;
+        var size = 5*1024*1024;
+
+        window.requestFileSystem(type, size, successCallback, errorCallback)
+
+        function successCallback(fs) {
+
+          fs.root.getFile(fileObj.name, {}, function(fileEntry) {
+
+             fileEntry.file(function(file) {
+                // var reader = new FileReader();
+
+                // reader.onloadend = function(e) {
+                //    var txtArea = document.getElementById('textarea');
+                //    txtArea.value = this.result;
+                // };
+
+                // reader.readAsText(file);
+console.log(fs.root.nativeURL);
+                uploadFile(file);
+
+             }, errorCallback);
+
+          }, errorCallback);
         }
 
-        
-        
+        function errorCallback(error) {
+          alert("ERROR: " + error.code)
+       }
+
+       function uploadFile(file){
+                var fileURL = file.localURL;
+                var uri = encodeURI("http://192.168.1.4:8800/json");
+                var options = new FileUploadOptions();
+
+                options.fileKey = "file";
+                options.fileName = fileURL.substr(fileURL.lastIndexOf('/')+1);
+                options.mimeType = "text/plain";
+
+                var headers = {'headerParam':'headerValue'};
+                options.headers = headers;
+
+                var ft = new FileTransfer();
+
+                ft.upload(fileURL, uri, onSuccess, onError, options);
+
+                function onSuccess(r) {
+                  console.log("Code = " + r.responseCode);
+                  console.log("Response = " + r.response);
+                  console.log("Sent = " + r.bytesSent);
+                }
+
+                function onError(error) {
+                  alert("An error has occurred: Code = " + error.code);
+                  console.log("upload error source " + error.source);
+                  console.log("upload error target " + error.target);
+                }
+       }
+
+
     };
 
 })

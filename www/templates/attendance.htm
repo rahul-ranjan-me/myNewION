@@ -2,7 +2,7 @@
 	<ion-content class="slideContainer">
 		<div class="label-button bar bar-header bar-energized">	
 			<button class="button pull-left"
-			      ng-click="previous()" ng-disabled="slideIndex == 3">
+			      ng-click="previous()" ng-disabled="slideIndex == 0">
 			    <i class="icon ion-ios-arrow-back"></i>
 				<i class="icon ion-ios-arrow-back"></i>
 			</button>
@@ -14,13 +14,14 @@
 			</button>
 		</div>     
 		
-		<ion-slide-box show-pager="false" active-slide="4" on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')"> 
+		<ion-slide-box show-pager="false" active-slide="slideIndex" on-swipe-left="slideHasChanged($index, 'left')" on-swipe-right="slideHasChanged($index, 'right')"> 
 		
 			<ion-slide ng-repeat="(i, months) in attendance.attendanceMonth">
 				<div class="slideContainer"  ng-if="attendance.attendanceDetails.monthName != months.monthName">
 					&nbsp;
 				</div>
 				<div class="slideContainer" ng-if="attendance.attendanceDetails.monthName == months.monthName">
+
 					<table>
 						<thead>
 							<tr>
