@@ -1042,7 +1042,7 @@ angular.module('aes.services', ['ionic', 'ngCordova', 'aes.constants'])
 
 .factory('DocumentTeacherService', function(AffiliationDTO, $q, $http){
 
-    this.saveDocument = function(studentName, params) {
+    this.saveDocument = function(params) {
         var defered = $q.defer();
         var urlBase = AffiliationDTO.getAffiliationData().ip
         var examService = "http://"+urlBase + '/rest/gStudentDtls/saveDoc';

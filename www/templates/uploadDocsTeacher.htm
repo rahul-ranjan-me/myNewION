@@ -31,14 +31,14 @@
 				<input type="file" id="fileupload" ng-model="filepath" fileread="file" ng-change="grabPath($event)" />
 			</div>
 			<div class="form-control">
-				<label for="remark">File Browse</label>
+				<label for="remark">Remark</label>
 				<textarea id="remark" ng-model="remark"></textarea>
 			</div>
 
 			<div class="form-control button-action">
-				<input type="button" ng-click="uploadDoc(class.classCode, section.sectionCode, documentType.doc_type_code, file, remark)" value="Upload" />
-
-				<!-- ng-disabled="(!class.classCode || !section.sectionCode || !examName.examNameCode || !subject.subjectCode)" -->
+				<input type="button" 
+					ng-disabled="(!class.classCode || !section.sectionCode || !documentType.doc_type_code || !file)" 
+					ng-click="uploadDoc(class.classCode, section.sectionCode, documentType.doc_type_code, file, remark)" value="Upload" />
 			</div>
 		</div>
 	</ion-content>

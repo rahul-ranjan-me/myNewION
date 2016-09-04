@@ -1444,7 +1444,7 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         });
     };
 
-   $scope.fetchSubjects = function(classCode, sectionCode, examCode){
+    $scope.fetchSubjects = function(classCode, sectionCode, examCode){
         TeacherExamMarksService.fetchSubjects(classCode, sectionCode, examCode).then(function(subjects){
             $scope.subjects = subjects;
             $ionicLoading.hide();
@@ -1455,93 +1455,113 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
     };
 
     document.querySelector('#fileupload').onchange = function(e) {
-      var files = this.files;
+        var files = this.files,
+            fileExtension = this.files[0].name.substring(this.files[0].name.lastIndexOf('.')+1, this.files[0].name.length);
 
-      window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
-        // Duplicate each file the user selected to the app's fs.
-        for (var i = 0, file; file = files[i]; ++i) {
+        if(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension ==='pdf'){
+            window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+                for (var i = 0, file; file = files[i]; ++i) {
 
-          // Capture current iteration's file in local scope for the getFile() callback.
-          (function(f) {
-            fs.root.getFile(f.name, {create: true, exclusive: true}, function(fileEntry) {
+                    (function(f) {
+                        fs.root.getFile(f.name, {create: true, exclusive: true}, function(fileEntry) {
 
-                  fileEntry.createWriter(function(fileWriter) {
-                    fileWriter.write(f); // Note: write() can take a File or Blob object.
-                  }, errorHandler);
+                        fileEntry.createWriter(function(fileWriter) {
+                            fileWriter.write(f); 
+                        }, errorHandler);
+                            
+                        }, errorHandler);
+                        
+                    })(file);
+
+                }
+
             }, errorHandler);
-          })(file);
-
+        }else{
+            $scope.showAlert('Error', 'Please choose .jpg or .pdf files only');
         }
-      }, errorHandler);
 
 
-      function errorHandler(error) {
-          alert("ERROR: " + error.code)
-       }
+        function errorHandler(error) {
+            $scope.showAlert('Upload error', 'There was an error proccessing file. Please try again.');
+        }
 
     };
 
+    $scope.showAlert = function(title, message) {
+        var alertPopup = $ionicPopup.alert({
+            title: title,
+            template: '<p>'+message+'</p>'
+        });
+
+        alertPopup.then(function(res) {
+            if(title === 'Upload success'){
+                $state.go('menu.getDocListByTeachers');
+            }
+        });
+    };
    
     $scope.uploadDoc = function(classCode, sectionCode, documentType, fileObj, remark, event){
-        var type = window.TEMPORARY;
-        var size = 5*1024*1024;
+        var type = window.TEMPORARY,
+            size = 50*1024*1024;
 
-        window.requestFileSystem(type, size, successCallback, errorCallback)
+        window.requestFileSystem(type, size, successCallback, errorCallback);
 
         function successCallback(fs) {
 
-          fs.root.getFile(fileObj.name, {}, function(fileEntry) {
+            fs.root.getFile(fileObj.name, {}, function(fileEntry) {
 
-             fileEntry.file(function(file) {
-                // var reader = new FileReader();
+                fileEntry.file(function(file) {
+                    uploadFile(file);
+                }, errorCallback);
 
-                // reader.onloadend = function(e) {
-                //    var txtArea = document.getElementById('textarea');
-                //    txtArea.value = this.result;
-                // };
+            }, errorCallback);
 
-                // reader.readAsText(file);
-console.log(fs.root.nativeURL);
-                uploadFile(file);
-
-             }, errorCallback);
-
-          }, errorCallback);
         }
 
         function errorCallback(error) {
-          alert("ERROR: " + error.code)
-       }
+            $scope.showAlert('Upload error', 'There was an error proccessing file. Please try again.');
+        }
 
-       function uploadFile(file){
-                var fileURL = file.localURL;
-                var uri = encodeURI("http://192.168.1.4:8800/json");
-                var options = new FileUploadOptions();
+        function uploadFile(file){
+            var fileURL = file.localURL,
+                uri = encodeURI("http://schoolerp.co.in:8085/upload/rest/file/upload/"+sectionCode+"/"+documentType),
+                options = new FileUploadOptions(),
+                headers = {'headerParam':'headerValue'},
+                ft = new FileTransfer(),
+                fileExtension = file.name.substring(file.name.lastIndexOf('.')+1, file.name.length),
+                fileNameWithoutExtension = file.name.substring(0, file.name.lastIndexOf('.')),
+                params = { 
+                    "classCode":classCode,
+                    "sectionCode":sectionCode,
+                    "fileName":fileNameWithoutExtension,
+                    "createdBy":studentId,
+                    "documentType":documentType,
+                    "fileType":fileExtension,
+                    "remark":remark
+                };
 
-                options.fileKey = "file";
-                options.fileName = fileURL.substr(fileURL.lastIndexOf('/')+1);
-                options.mimeType = "text/plain";
+            options.fileKey = "file";
+            options.fileName = fileURL.substr(fileURL.lastIndexOf('/')+1);
+            options.mimeType = "text/plain";
+            options.headers = headers;
 
-                var headers = {'headerParam':'headerValue'};
-                options.headers = headers;
+            ft.upload(fileURL, uri, onSuccess, onError, options);
 
-                var ft = new FileTransfer();
+            function onSuccess(r) {
+                // DocumentTeacherService.saveDocument(params).then(function(response){
+                //     console.log(response);
+                //     $ionicLoading.hide();
+                // }, function(error) {
+                //     console.error('err', error);
+                //     $ionicLoading.hide();
+                // });
+                $scope.showAlert('Upload success', 'File uploaded successfully.');
+            }
 
-                ft.upload(fileURL, uri, onSuccess, onError, options);
-
-                function onSuccess(r) {
-                  console.log("Code = " + r.responseCode);
-                  console.log("Response = " + r.response);
-                  console.log("Sent = " + r.bytesSent);
-                }
-
-                function onError(error) {
-                  alert("An error has occurred: Code = " + error.code);
-                  console.log("upload error source " + error.source);
-                  console.log("upload error target " + error.target);
-                }
-       }
-
+            function onError(error) {
+                $scope.showAlert('Upload error', 'There was an error proccessing file. Please try again.');
+            }
+        }
 
     };
 
