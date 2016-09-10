@@ -36,7 +36,9 @@
 			</div>
 
 			<div class="form-control button-action">
-				<input type="button" ng-click="getExamDetails(class.classCode, section.sectionCode, examName.examcode, subject.subjectcode)" value="Search" />
+				<input type="button" 
+					ng-disabled= "(!class || !section || !examName || !subject)"
+					ng-click="getExamDetails(class.classCode, section.sectionCode, examName.examcode, subject.subjectcode)" value="Search" />
 
 				<!-- ng-disabled="(!class.classCode || !section.sectionCode || !examName.examNameCode || !subject.subjectCode)" -->
 			</div>

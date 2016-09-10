@@ -873,8 +873,26 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         comments: $scope.comments
     };
 
+    $scope.contactPlaceholder = "Please enter your contact number";
+    $scope.emailPlaceholder = "Please enter your email ID";
+
+    $scope.validateContact = function(payLoadContact){
+        if(payLoadContact.length < 10 || isNaN(payLoadContact)){
+            $scope.payload.contactNo = '';
+            $scope.contactPlaceholder = 'Please enter valid contact number.';
+        }
+    };
+
+    $scope.validateEmail = function(payLoadEmail){
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(!re.test(payLoadEmail)){
+            $scope.payload.email = '';
+            $scope.emailPlaceholder = 'Please enter valid email ID.';
+        }
+    };
+
     $scope.calcDisabled = function(){
-        var status = false;
+        var status = false; 
         for(var i in $scope.payload){
             if(!$scope.payload[i]){
                 status = true;
@@ -985,7 +1003,7 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
 
     var ipObj1 = {
         callback: function (val) {  //Mandatory
-            counter = Math.abs(daydiff(new Date(), new Date(val)))-1;
+            counter = Math.abs(daydiff(new Date(), new Date(val)));
             fetchHomework(counter);
         },
         from: new Date(2012, 1, 1), //Optional
@@ -1454,39 +1472,6 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
         });
     };
 
-    document.querySelector('#fileupload').onchange = function(e) {
-        var files = this.files,
-            fileExtension = this.files[0].name.substring(this.files[0].name.lastIndexOf('.')+1, this.files[0].name.length);
-
-        if(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension ==='pdf'){
-            window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
-                for (var i = 0, file; file = files[i]; ++i) {
-
-                    (function(f) {
-                        fs.root.getFile(f.name, {create: true, exclusive: true}, function(fileEntry) {
-
-                        fileEntry.createWriter(function(fileWriter) {
-                            fileWriter.write(f); 
-                        }, errorHandler);
-                            
-                        }, errorHandler);
-                        
-                    })(file);
-
-                }
-
-            }, errorHandler);
-        }else{
-            $scope.showAlert('Error', 'Please choose .jpg or .pdf files only');
-        }
-
-
-        function errorHandler(error) {
-            $scope.showAlert('Upload error', 'There was an error proccessing file. Please try again.');
-        }
-
-    };
-
     $scope.showAlert = function(title, message) {
         var alertPopup = $ionicPopup.alert({
             title: title,
@@ -1499,70 +1484,36 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
             }
         });
     };
+
+    $scope.getTheFiles = function ($files) {
+        var file = $files[0];
+        var fileExtension = file.name.substring(file.name.lastIndexOf('.')+1, file.name.length);
+        if(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'pdf'){
+            $scope.file = file;
+            $scope.$apply();
+        }else{
+            delete $scope.file;
+            $scope.showAlert('Upload error', 'Please select .pdf or .jpg files only.');
+        }
+        
+    };
    
     $scope.uploadDoc = function(classCode, sectionCode, documentType, fileObj, remark, event){
-        var type = window.TEMPORARY,
-            size = 50*1024*1024;
-
-        window.requestFileSystem(type, size, successCallback, errorCallback);
-
-        function successCallback(fs) {
-
-            fs.root.getFile(fileObj.name, {}, function(fileEntry) {
-
-                fileEntry.file(function(file) {
-                    uploadFile(file);
-                }, errorCallback);
-
-            }, errorCallback);
-
-        }
-
-        function errorCallback(error) {
-            $scope.showAlert('Upload error', 'There was an error proccessing file. Please try again.');
-        }
-
-        function uploadFile(file){
-            var fileURL = file.localURL,
-                uri = encodeURI("http://schoolerp.co.in:8085/upload/rest/file/upload/"+sectionCode+"/"+documentType),
-                options = new FileUploadOptions(),
-                headers = {'headerParam':'headerValue'},
-                ft = new FileTransfer(),
-                fileExtension = file.name.substring(file.name.lastIndexOf('.')+1, file.name.length),
-                fileNameWithoutExtension = file.name.substring(0, file.name.lastIndexOf('.')),
-                params = { 
-                    "classCode":classCode,
-                    "sectionCode":sectionCode,
-                    "fileName":fileNameWithoutExtension,
-                    "createdBy":studentId,
-                    "documentType":documentType,
-                    "fileType":fileExtension,
-                    "remark":remark
-                };
-
-            options.fileKey = "file";
-            options.fileName = fileURL.substr(fileURL.lastIndexOf('/')+1);
-            options.mimeType = "text/plain";
-            options.headers = headers;
-
-            ft.upload(fileURL, uri, onSuccess, onError, options);
-
-            function onSuccess(r) {
-                // DocumentTeacherService.saveDocument(params).then(function(response){
-                //     console.log(response);
-                //     $ionicLoading.hide();
-                // }, function(error) {
-                //     console.error('err', error);
-                //     $ionicLoading.hide();
-                // });
-                $scope.showAlert('Upload success', 'File uploaded successfully.');
-            }
-
-            function onError(error) {
-                $scope.showAlert('Upload error', 'There was an error proccessing file. Please try again.');
-            }
-        }
-
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        DocumentTeacherService.saveDocument($scope.file, sectionCode, documentType, remark).then(function(res){
+            $ionicLoading.hide();
+            $scope.showAlert('Upload success', 'Your file has been uploaded successfully.');
+        }, function(error) {
+            $scope.showAlert('Upload error', 'Error while uploading file.');
+            console.error('err', error);
+            $ionicLoading.hide();
+        });
     };
 
 })
@@ -1737,6 +1688,11 @@ angular.module('aes.controllers', ['ionic', 'ngCordova', 'aes.services', 'ui.cal
                 break;
             }
         }
+
+        if(!$scope.val.multiple && !status){
+            status = true;
+        }
+
         return status;
     };
 

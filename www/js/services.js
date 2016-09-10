@@ -1042,16 +1042,33 @@ angular.module('aes.services', ['ionic', 'ngCordova', 'aes.constants'])
 
 .factory('DocumentTeacherService', function(AffiliationDTO, $q, $http){
 
-    this.saveDocument = function(params) {
+    this.saveDocument = function(file, sectionCode, documentType, remark) {
         var defered = $q.defer();
         var urlBase = AffiliationDTO.getAffiliationData().ip
-        var examService = "http://"+urlBase + '/rest/gStudentDtls/saveDoc';
-        
-        $http.post(examService, params).then(function(response) {
+        var examService = "http://schoolerp.co.in:8085/upload/rest/file/upload/"+sectionCode+"/"+documentType;
+        $http({
+            method: 'POST',
+            url: examService,
+            transformRequest: function (data) {
+                var formData = new FormData();
+                formData.append("file", file);
+                formData.append("remarks", remark);
+                return formData;
+            },
+            data: {
+                file: file,
+                remarks: remark
+            },
+            headers: {'Content-Type': undefined}
+        }).then(function(response) {
             defered.resolve(response.data);
         }, function(error) {
-            console.error(error);
-            defered.reject(error);
+            if(error.message === 'Unexpected token F in JSON at position 0'){
+               defered.resolve(error); 
+            }else{
+                console.error(error);
+                defered.reject(error);
+            }
         });
 
         return defered.promise;
@@ -1411,4 +1428,17 @@ angular.module('aes.services', ['ionic', 'ngCordova', 'aes.constants'])
             },100);
         }
     };
-});
+})
+
+.directive('ngFiles', ['$parse', function ($parse) {
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+} ]);

@@ -28,7 +28,7 @@
 			</div>
 			<div class="form-control">
 				<label for="fileupload">File Browse</label>
-				<input type="file" id="fileupload" ng-model="filepath" fileread="file" ng-change="grabPath($event)" />
+				<input type="file" ng-model="file" ng-files="getTheFiles($files)" />
 			</div>
 			<div class="form-control">
 				<label for="remark">Remark</label>
@@ -37,7 +37,7 @@
 
 			<div class="form-control button-action">
 				<input type="button" 
-					ng-disabled="(!class.classCode || !section.sectionCode || !documentType.doc_type_code || !file)" 
+					ng-disabled="(!class.classCode || !section.sectionCode || !documentType.doc_type_code || !file || !remark)" 
 					ng-click="uploadDoc(class.classCode, section.sectionCode, documentType.doc_type_code, file, remark)" value="Upload" />
 			</div>
 		</div>

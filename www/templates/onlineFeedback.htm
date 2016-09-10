@@ -7,11 +7,11 @@
 			</div>
 			<div class="form-control">
 				<label for="contactNumber">Contact no.</label>
-				<input type="text" id="contactNumber" ng-model="payload.contactNo" placeholder="Enter your contact no." />
+				<input type="text" id="contactNumber" ng-model="payload.contactNo" ng-blur="validateContact(payload.contactNo)" placeholder="{{contactPlaceholder}}" />
 			</div>
 			<div class="form-control">
 				<label for="email">Your email</label>
-				<input type="text" id="email" ng-model="payload.email" placeholder="Enter your email" />
+				<input type="text" id="email" ng-class="{'error' : emailError}" ng-model="payload.email" ng-blur="validateEmail(payload.email)" placeholder="{{emailPlaceholder}}" />
 			</div>
 			<div class="form-control">
 				<label for="subject">Subject</label>

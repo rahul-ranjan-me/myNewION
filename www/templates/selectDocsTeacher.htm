@@ -21,7 +21,9 @@
 			
 
 			<div class="form-control button-action">
-				<input type="button" ng-click="viewDoc(section.sectionCode)" value="View Doc" />
+				<input type="button" 
+					ng-disabled = "(!class || !section)"
+					ng-click="viewDoc(section.sectionCode)" value="View Doc" />
 
 				<!-- ng-disabled="(!class.classCode || !section.sectionCode || !examName.examNameCode || !subject.subjectCode)" -->
 			</div>
